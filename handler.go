@@ -54,9 +54,9 @@ func (e *eventHandler) HandlePREvent(event *sdk.PullRequestEvent) error {
 	}
 
 	msg := e.buildMsgPkgCIChecked(
+		event,
 		e.getCiComment(event),
 		result.UnsortedList()[0],
-		int(event.GetPRNumber()),
 	)
 
 	return e.sendMsgCIChecked(msg)
@@ -93,9 +93,10 @@ type msgPkgCIChecked struct {
 	Success  bool   `json:"success"`
 }
 
-func (e *eventHandler) buildMsgPkgCIChecked(comment, label string, prNum int) msgPkgCIChecked {
+func (e *eventHandler) buildMsgPkgCIChecked(event *sdk.PullRequestEvent, comment, label string) msgPkgCIChecked {
 	msg := msgPkgCIChecked{
-		PRNumber: prNum,
+		PkgId:    event.PullRequest.Body,
+		PRNumber: int(event.GetPRNumber()),
 	}
 
 	switch label {
