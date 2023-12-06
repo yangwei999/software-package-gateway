@@ -123,5 +123,10 @@ func (e *eventHandler) sendMsgCIChecked(msg msgPkgCIChecked) error {
 		return err
 	}
 
-	return kafka.Publish(e.cfg.Topics.SoftwarePkgCIChecked, nil, body)
+	err = kafka.Publish(e.cfg.Topics.SoftwarePkgCIChecked, nil, body)
+	if err == nil {
+		logrus.Infoln("send success to", e.cfg.Topics.SoftwarePkgCIChecked, string(body))
+	}
+
+	return err
 }
