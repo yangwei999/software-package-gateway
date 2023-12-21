@@ -14,7 +14,7 @@ import (
 const (
 	ciSuccessFull   = "ci_successful"
 	ciFailed        = "ci_failed"
-	ciCommentPrefix = "<table><tr><th>Check Name"
+	ciCommentPrefix = "<table>"
 )
 
 type iClient interface {
